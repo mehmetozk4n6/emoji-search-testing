@@ -33,7 +33,10 @@ describe("Emoji search testleri", () => {
   });
   //when clicked , should copy
   it("should copy", () => {
+    document.execCommand = jest.fn();
     userEvent.click(emojiListFirst);
-    expect(emojiListFirst).toHaveAttribute("data-clipboard-text");
+    expect(document.execCommand).toBeCalledWith("copy");
+    const copyEmoji = window.ClipboardData;
+    expect(copyEmoji).toEqual(emojiListFirst.value);
   });
 });
